@@ -19,6 +19,7 @@ function formSubmit(e) {
   sendMessage(fname, lname, phone); 
 
   document.getElementById('registrationform').reset();
+  drawTable();
 }
 
 function sendMessage(fname, lname, phone) {
@@ -39,9 +40,13 @@ function sendMessage(fname, lname, phone) {
 
 	function drawTable() {
         var div1 = document.getElementById('div1');
-        
-    var ref = firebase.database().ref('customers');
-    var table = document.getElementById("contacts_table");
+        var ref = firebase.database().ref('customers');
+        var table = document.getElementById("contacts_table");
+        table.innerHTML="<tr><td>First name</td>"+
+                        "<td>Last name</td>"+
+                        "<td>Phone</td>"+
+                        "<td>Unique ID</td>"+
+                        "<td>Options</td></tr>";    
 
 ref.once('value', function(snapshot){
         if(snapshot.exists()){
@@ -52,12 +57,23 @@ ref.once('value', function(snapshot){
                 content += '<td>' + val.fname+ '</td>';
                 content += '<td>' + val.lname+ '</td>';
                 content += '<td>' + val.phone+ '</td>';
-                content += '<td>' + "remove" + '</td>';
+                content += '<td>' + data.key + '</td>';
+                content += '<td><button style="height:100%" onclick="Delete(this)"';
+                content += '>Remove</button></td>';
                 content += '</tr>';
             });
             table.innerHTML += content;
         }});
 
-    
+
 	}
+
+    function Delete(o){
+
+        var p=o.parentNode.parentNode;
+        var id= p.children[3].outerHTML;        
+        id = id.replace("<td>","").replace("</td>","");
+        firebase.database().ref('customers/'+id).remove();
+        p.parentNode.removeChild(p);
+    }
 
