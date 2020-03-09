@@ -2,72 +2,62 @@
 <html>
 <head>
 <title>Wutzu Contact Book</title>
-<style>
-#div1 {margin:10px;font-size:1.25em;}
-table {border-collapse:collapse;border:1px solid #000000;}
-td {text-align:center; width: 5em; height: 1.5em;}
-</style>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body >
+<body onload="drawTable()">
 
 <h1>Wutzu Simple Contact Book</h1>
+<table border='1' width='100%' id="contacts_table"> 
+<tr>
+    <td>First name</td>
+    <td>Last name</td>
+    <td>Phone</td>
+    <td>Options</td>
+</tr></table>
 
-<div id="div1"></div>
-
-<script>
-var totalRows = 5;
-var cellsInRow = 4;
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Add a new contact</button>
 
 
-    function drawTable() {
-        var div1 = document.getElementById('div1');
-        var main_table = document.createElement("table");
- 
-        // creating the main collum names
-        var cell = document.createElement("td");
-        var row = document.createElement("tr");
-        
-        var cellText = document.createTextNode("First name");
-                cell.appendChild(cellText);
-                row.appendChild(cell);
-        
-        cellText = document.createTextNode("Last name");
-                cell = document.createElement("td");
-                cell.appendChild(cellText);
-                row.appendChild(cell);        
-        
-        cellText = document.createTextNode("Phone Number");
-                cell = document.createElement("td");
-                cell.appendChild(cellText);
-                row.appendChild(cell); 
-        
-        cellText = document.createTextNode("Options");
-                cell = document.createElement("td");
-                cell.appendChild(cellText);
-                row.appendChild(cell);                          
-		
-		main_table.appendChild(row);
-
-		// creating the table
-        for (var r = 0; r < totalRows; r++) {
-            var row = document.createElement("tr");
-	     
-	     
-             for (var c = 0; c < cellsInRow; c++) {
-                var cell = document.createElement("td");
-                var cellText = document.createTextNode(Math.floor(Math.random() * 10));
-                cell.appendChild(cellText);
-                row.appendChild(cell);
-            }           
-            
-	main_table.appendChild(row); // add the row to the end of the table body
-        }
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" method="post" action="" id="registrationform">
     
-     div1.appendChild(main_table); // appends <table> into <div1>
-}
-window.onload=drawTable; 
-</script>
+    <div class="container">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+      <label><b>First name</b></label>
+      <input type="text" placeholder="John" id="fname" required>
+
+      <label><b>Last name</b></label>
+      <input type="text" placeholder="Smith" id="lname" required>
+
+      <label><b>Phone Number</b></label>
+      <input type="text" placeholder="0726388925" id="phone" required>
+        
+      <button type="submit" onclick="document.getElementById('id01').style.display='none'">Add new contact</button>
+     
+    </div>
+
+  
+  </form>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-database.js"></script>
+<script type="text/javascript">  
+//Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyA48-v82L2vS3G2fvr569CJBLm3z5lbuas",
+    authDomain: "contactbook-3b87e.firebaseapp.com",
+    databaseURL: "https://contactbook-3b87e.firebaseio.com",
+    projectId: "contactbook-3b87e",
+    storageBucket: "contactbook-3b87e.appspot.com",
+    messagingSenderId: "50343474665",
+    appId: "1:50343474665:web:b86f2cc58698c1f7d2c778"
+  };
+  firebase.initializeApp(firebaseConfig);</script>
+<script src="javascript.js"></script>
 </body>
 </html>
 
